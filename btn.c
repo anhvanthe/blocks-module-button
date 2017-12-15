@@ -1,3 +1,4 @@
+/* btn.c - (c) 2017 Blocks Wearables Ltd. */
 #include "btn.h"
 #include "cy8cmbr3108.h"
 #include <stm32l0xx.h>

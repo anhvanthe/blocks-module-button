@@ -1,3 +1,4 @@
+/* cy8cmbr3108 Button Driver - (c) 2017 Blocks Wearables Ltd. */
 #include "cy8cmbr3108.h"
 #include "regs.h"
 

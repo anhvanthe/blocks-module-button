@@ -1,3 +1,4 @@
+/* main.c - (c) 2017 Blocks Wearables Ltd. */
 #include <vendor.h>
 #include "btn.h"
 

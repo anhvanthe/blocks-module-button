@@ -18,6 +18,7 @@ extern "C" {
 
 #include <stdint.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 /* Define module label (20 wchar) */
 #define BLOCKS_MODULE_LABEL				u"Sample Module"
@@ -111,8 +112,7 @@ typedef enum _blocks_errorcode_t
 	ERROR_LENGTH_EXCEEDED,
 	ERROR_PENDING_OPERATION,
 	ERROR_CONNECTION,
-	ERROR_ASYNC_REQUEST,
-	ERROR_BS,
+	ERROR_ASYNC_REQUEST
 } blocks_errorcode_t;
 
 #define VENDOR_LABEL_MAX_LEN	30
@@ -142,7 +142,6 @@ typedef struct _vendor_module_info_t
 	BLOCKS_MODULE_MODELID, \
 }
 
-typedef uint8_t bool;
 typedef struct __attribute((packed)) blocks_GpsLocation 
 {
 	uint32_t lattitude;

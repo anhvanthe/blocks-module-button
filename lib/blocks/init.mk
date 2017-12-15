@@ -1,0 +1,4 @@
+LD_LINKER_FILE = "$(BLOCKS_DIR).ld/$(TARGET).ld"
+LD_FLAGS      += -Wl,-L$(BLOCKS_DIR).ld
+
+INCLUDE_PATHS += $(BLOCKS_DIR)

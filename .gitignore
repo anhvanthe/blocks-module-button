@@ -1,0 +1,3 @@
+build
+!lib/blocks/platform*.o
+!lib/stm/stm*.o

@@ -1,0 +1,7 @@
+
+/* Firmware specific linker info */ 
+
+REGION_ALIAS("ROM", FIRMWARE );
+ 
+
+

@@ -37,10 +37,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 bool Button_init(void)
 {
-    if (!cy8cmbr3_write_config(CY8CMBR3_IC2_ADDR_DEFAULT)) {
-		return false;
-	}
-
     // I2C setup
 	i2c_2 = (I2C_HandleTypeDef){
 		.Instance              = I2C2,
@@ -58,5 +54,5 @@ bool Button_init(void)
 	if (HAL_I2CEx_AnalogFilter_Config(&i2c_2, I2C_ANALOGFILTER_ENABLED)
         != HAL_OK) return false;
 
-    return true;
+    return cy8cmbr3_write_config(CY8CMBR3_IC2_ADDR_DEFAULT);
 }

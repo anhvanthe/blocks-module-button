@@ -5,14 +5,17 @@
 
 void blocks_initializeModule(void)
 {
-	if (!Button_init()) {
-		blocks_notify(0xFF); // ModuleError
-	}
+	Button_init();
+
+	// TODO: Enable once vendor-notify confirmed working
+	//if (!Button_init()) {
+		//blocks_vendorNotify(0xFF); // ModuleError
+	//}
 }
 
 void Button_handle_press(void)
 {
-	blocks_notify(0x101); // ButtonPressed
+	blocks_vendorNotify(0x101); // ButtonPressed
 }
 
 void blocks_main(void)

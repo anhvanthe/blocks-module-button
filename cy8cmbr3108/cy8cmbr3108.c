@@ -146,7 +146,7 @@ bool cy8cmbr3_write_config(uint8_t i2cAddress)
         // Send & update CRC
         else if (addr == nextCfg->address)
         {
-            if (!write_register(i2cAddress, addr, nextCfg->value)) return 0;
+            if (!write_register(i2cAddress, addr, nextCfg->value)) return false;
             crc = compute_crc16(nextCfg->value, crc);
             nextCfg++;
         }
@@ -154,12 +154,12 @@ bool cy8cmbr3_write_config(uint8_t i2cAddress)
 
     // Write CRC
     if (!write_register(i2cAddress, REG_CONFIG_CRC,
-        (uint8_t)(crc & 0xFF))) return 0;
+        (uint8_t)(crc & 0xFF))) return false;
 
     if (!write_register(i2cAddress, REG_CONFIG_CRC + 1,
-        (uint8_t)((crc >> 4) & 0xFF))) return 0;
+        (uint8_t)((crc >> 4) & 0xFF))) return false;
 
-    return 1;
+    return true;
 }
 
 

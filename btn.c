@@ -54,5 +54,16 @@ bool Button_init(void)
 	if (HAL_I2CEx_AnalogFilter_Config(&i2c_2, I2C_ANALOGFILTER_ENABLED)
         != HAL_OK) return false;
 
+	// Set up pin PB0 for touch interrupt
+	GPIO_InitTypeDef pinCfg;
+	pinCfg.Pin  = GPIO_PIN_0;
+	pinCfg.Mode = GPIO_MODE_IT_RISING;
+	pinCfg.Pull = GPIO_PULLDOWN;
+	HAL_GPIO_Init(GPIOB, &pinCfg);
+
+	// Enable interrupt
+	HAL_NVIC_SetPriority(EXTI0_1_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
+
     return cy8cmbr3_write_config(CY8CMBR3_IC2_ADDR_DEFAULT);
 }

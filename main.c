@@ -2,11 +2,11 @@
 #include <vendor.h>
 #include "btn.h"
 
-static bool res = true;
+static bool res = false;
 
 void blocks_initializeModule(void)
 {
-	res = Button_init();
+	if (Button_init()) res = true;
 
 	// TODO: Enable once vendor-notify confirmed working
 	//if (!Button_init()) {
@@ -23,7 +23,7 @@ void blocks_main(void)
 {
 	while (1) {
 		module_vendor_idle();
-		blocks_vendorNotify(res ? 0xBEEF : 0xFA11);
+		if (res) blocks_vendorNotify(0xBEEF);
 	}
 }
 

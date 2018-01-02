@@ -103,10 +103,10 @@ static uint16_t compute_crc16(uint8_t value, uint16_t currentCRC)
 static bool read_register(uint8_t i2cAddress, uint8_t regAddress, uint8_t* value_out)
 {
     // Send address
-    if (!cy8cmbr3_i2c_read(i2cAddress, &regAddress, 1)) return false;
+    if (!cy8cmbr3_i2c_write(i2cAddress, &regAddress, 1)) return false;
 
     // Receive data
-    if (!cy8cmbr3_i2c_write(i2cAddress, value_out, 1)) return false;
+    if (!cy8cmbr3_i2c_read(i2cAddress, value_out, 1)) return false;
 
     return true;
 }

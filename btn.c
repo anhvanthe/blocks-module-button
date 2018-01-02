@@ -5,6 +5,7 @@
 #include <stm32l0xx_hal_gpio.h>
 #include <stm32l0xx_hal_dma.h>
 #include <stm32l0xx_hal_i2c.h>
+#include <stm32l0xx_hal_rcc_ex.h>
 
 static I2C_HandleTypeDef i2c_2;
 
@@ -13,7 +14,7 @@ bool cy8cmbr3_i2c_read(uint8_t i2cAddress, uint8_t* buffer, uint16_t size)
     uint8_t tries = 0;
 
     while (tries++ != 5 &&
-        HAL_I2C_Master_Receive(&i2c_2, i2cAddress, buffer, size, 10) != HAL_OK) { }
+        HAL_I2C_Master_Receive(&i2c_2, (i2cAddress << 1) | 0x01, buffer, size, 10) != HAL_OK) { }
     return tries <= 5;
 }
 
@@ -22,7 +23,7 @@ bool cy8cmbr3_i2c_write(uint8_t i2cAddress, const uint8_t* data, uint16_t size)
     uint8_t tries = 0;
 
     while (tries++ != 5 &&
-        HAL_I2C_Master_Transmit(&i2c_2, i2cAddress, data, size, 10) != HAL_OK) { }
+        HAL_I2C_Master_Transmit(&i2c_2, i2cAddress << 1, data, size, 10) != HAL_OK) { }
 
     return tries <= 5;
 }
@@ -37,6 +38,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 bool Button_init(void)
 {
+	// Configure GPIO as I2C
+	GPIO_InitTypeDef GPIO_InitStruct;
+	GPIO_InitStruct.Pin = GPIO_PIN_11|GPIO_PIN_10;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+	GPIO_InitStruct.Alternate = GPIO_AF6_I2C2;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	__I2C2_CLK_ENABLE();
     // I2C setup
 	i2c_2 = (I2C_HandleTypeDef){
 		.Instance              = I2C2,

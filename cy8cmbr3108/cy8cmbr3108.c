@@ -141,6 +141,7 @@ bool cy8cmbr3_write_config(uint8_t i2cAddress)
     {
         // Skip sending reserved/invalid registers, but update CRC as if zero
         if (addr != nextCfg->address) {
+            //if (!write_register(i2cAddress, addr, 0)) return false;
             crc = compute_crc16(0, crc);
         }
         // Send & update CRC

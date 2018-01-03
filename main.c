@@ -6,7 +6,7 @@ static bool res = false;
 
 void blocks_initializeModule(void)
 {
-	if (Button_init()) res = true;
+	res = Button_init();
 
 	// TODO: Enable once vendor-notify confirmed working
 	//if (!Button_init()) {
@@ -17,13 +17,14 @@ void blocks_initializeModule(void)
 void Button_handle_press(void)
 {
 	blocks_vendorNotify(0x101); // ButtonPressed
+	res = false;
 }
 
 void blocks_main(void)
 {
 	while (1) {
 		module_vendor_idle();
-		if (res) blocks_vendorNotify(0xBEEF);
+		if (!res) blocks_vendorNotify(0xFF);
 	}
 }
 

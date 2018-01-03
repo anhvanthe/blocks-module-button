@@ -40,13 +40,14 @@ bool Button_init(void)
 {
 	// Configure GPIO as I2C
 	GPIO_InitTypeDef GPIO_InitStruct;
-	GPIO_InitStruct.Pin = GPIO_PIN_11|GPIO_PIN_10;
-	GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+	GPIO_InitStruct.Pin       = GPIO_PIN_11|GPIO_PIN_10;
+	GPIO_InitStruct.Mode      = GPIO_MODE_AF_OD;
+	GPIO_InitStruct.Pull      = GPIO_PULLUP;
+	GPIO_InitStruct.Speed     = GPIO_SPEED_HIGH;
 	GPIO_InitStruct.Alternate = GPIO_AF6_I2C2;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 	__I2C2_CLK_ENABLE();
+
     // I2C setup
 	i2c_2 = (I2C_HandleTypeDef){
 		.Instance              = I2C2,

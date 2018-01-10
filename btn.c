@@ -28,10 +28,14 @@ bool cy8cmbr3_i2c_write(uint8_t i2cAddress, const uint8_t* data, uint16_t size)
     return tries <= 5;
 }
 
+void EXTI0_1_IRQHandler(void)
+{
+    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
+}
+
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-	if (GPIO_Pin == GPIO_PIN_0)
-	{
+	if (GPIO_Pin == GPIO_PIN_0) {
         Button_handle_press();
     }
 }
@@ -68,8 +72,8 @@ bool Button_init(void)
 	// Set up pin PB0 for touch interrupt
 	GPIO_InitTypeDef pinCfg;
 	pinCfg.Pin  = GPIO_PIN_0;
-	pinCfg.Mode = GPIO_MODE_IT_RISING;
-	pinCfg.Pull = GPIO_PULLDOWN;
+	pinCfg.Mode = GPIO_MODE_IT_FALLING;
+	pinCfg.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(GPIOB, &pinCfg);
 
 	// Enable interrupt

@@ -2,29 +2,22 @@
 #include <vendor.h>
 #include "btn.h"
 
-static bool res = false;
-
 void blocks_initializeModule(void)
 {
-	res = Button_init();
-
-	// TODO: Enable once vendor-notify confirmed working
-	//if (!Button_init()) {
-		//blocks_vendorNotify(0xFF); // ModuleError
-	//}
+	if (!Button_init()) {
+		blocks_vendorNotify(0xFF); // ModuleError
+	}
 }
 
 void Button_handle_press(void)
 {
 	blocks_vendorNotify(0x101); // ButtonPressed
-	res = false;
 }
 
 void blocks_main(void)
 {
 	while (1) {
 		module_vendor_idle();
-		if (!res) blocks_vendorNotify(0xFF);
 	}
 }
 
@@ -35,6 +28,6 @@ const vendor_module_info_t blocks_module_info = {
 };
 
 /* Register "get info" dummy function to indicate button-press capability */
-const vendor_array_handler_t blocks_module_functions = { .count = 0, {
+const vendor_array_handler_t blocks_module_functions = { .count = 1, {
 	{FUNC_BTN_GET_INFO, NULL} /* Will never be invoked */
 }};

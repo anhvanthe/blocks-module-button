@@ -43,12 +43,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 bool Button_init(void)
 {
 	// Configure GPIO as I2C
-	GPIO_InitTypeDef GPIO_InitStruct;
-	GPIO_InitStruct.Pin       = GPIO_PIN_11|GPIO_PIN_10;
-	GPIO_InitStruct.Mode      = GPIO_MODE_AF_OD;
-	GPIO_InitStruct.Pull      = GPIO_PULLUP;
-	GPIO_InitStruct.Speed     = GPIO_SPEED_HIGH;
-	GPIO_InitStruct.Alternate = GPIO_AF6_I2C2;
+	GPIO_InitTypeDef GPIO_InitStruct = {
+        .Pin       = GPIO_PIN_11 | GPIO_PIN_10,
+        .Mode      = GPIO_MODE_AF_OD,
+        .Pull      = GPIO_PULLUP,
+        .Speed     = GPIO_SPEED_HIGH,
+        .Alternate = GPIO_AF6_I2C2,
+    };
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 	__I2C2_CLK_ENABLE();
 
@@ -70,10 +71,11 @@ bool Button_init(void)
         != HAL_OK) return false;
 
 	// Set up pin PB0 for touch interrupt
-	GPIO_InitTypeDef pinCfg;
-	pinCfg.Pin  = GPIO_PIN_0;
-	pinCfg.Mode = GPIO_MODE_IT_FALLING;
-	pinCfg.Pull = GPIO_PULLUP;
+	GPIO_InitTypeDef pinCfg = {
+        .Pin  = GPIO_PIN_0,
+        .Mode = GPIO_MODE_IT_FALLING,
+        .Pull = GPIO_PULLUP,
+    };
 	HAL_GPIO_Init(GPIOB, &pinCfg);
 
 	// Enable interrupt

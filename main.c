@@ -2,15 +2,13 @@
 #include <vendor.h>
 #include "btn.h"
 
-void blocks_initializeModule(void)
-{
-	if (!Button_init()) {
+void blocks_initializeModule(void) {
+	if (!button_init()) {
 		blocks_vendorNotify(NOTIFY_MODULE_ERROR);
 	}
 }
 
-void Button_handle_press(void) 
-{
+void button_handle_press(void)  {
 	blocks_vendorNotify(NOTIFY_BUTTON_PRESSED); 
 }
 

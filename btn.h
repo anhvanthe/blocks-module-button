@@ -2,5 +2,5 @@
 #pragma once
 #include <vendor.h>
 
-void Button_handle_press(void);
-bool Button_init(void);
+void button_handle_press(void);
+bool button_init(void);

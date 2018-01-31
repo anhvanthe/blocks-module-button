@@ -1,6 +1,8 @@
 INCLUDES = $(INCLUDE_PATHS:%=-I%)
 OBJS     = $(CFILES:%.c=$(BUILD_DIR)%.o) $(SFILES:%.s=$(BUILD_DIR)%.o)
 
+.PHONY: all
+
 all: $(BUILD_DIR)fw.bin
 	@echo Inserting Config
 	$(shell $(BLOCKS_DIR).tools/insert-conf.py -v $(VERSION) -f $(BUILD_DIR)fw.bin -o $(BUILD_DIR)fw.flash)
@@ -12,7 +14,7 @@ $(BUILD_DIR)%.o: %.c
 
 $(BUILD_DIR)fw.o: $(OBJS)
 	@echo LD $@
-	$(CC) $(C_FLAGS) $(INCLUDES) $(LD_FLAGS) $(BLOCKS_DIR)/platform_$(TARGET).o lib/stm/stm_$(TARGET).o $(OBJS) -o build/fw.o
+	$(CC) $(C_FLAGS) $(INCLUDES) $(LD_FLAGS) $(BLOCKS_DIR)/platform_$(TARGET).o lib/stm/stm_$(TARGET).o $(OBJS) $(STATIC_LIBS) -o build/fw.o
 
 $(BUILD_DIR)fw.bin: $(BUILD_DIR)fw.o
 	@echo objcopy

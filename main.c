@@ -5,13 +5,13 @@
 void blocks_initializeModule(void)
 {
 	if (!Button_init()) {
-		blocks_vendorNotify(0xFF); // ModuleError
+		blocks_vendorNotify(NOTIFY_MODULE_ERROR);
 	}
 }
 
-void Button_handle_press(void)
+void Button_handle_press(void) 
 {
-	blocks_vendorNotify(0x101); // ButtonPressed
+	blocks_vendorNotify(NOTIFY_BUTTON_PRESSED); 
 }
 
 void blocks_main(void)
@@ -29,5 +29,5 @@ const vendor_module_info_t blocks_module_info = {
 
 /* Register "get info" dummy function to indicate button-press capability */
 const vendor_array_handler_t blocks_module_functions = { .count = 1, {
-	{FUNC_BTN_GET_INFO, NULL} /* Will never be invoked */
+	{STDFUNC_BTN_GET_INFO, NULL} /* Will never be invoked */
 }};
